@@ -5,7 +5,7 @@
 #include "cmsis_compiler.h"
 #include <stdint.h>
 #include "stm32f4xx.h"
-
+uint32_t global_tick;
 /* In schedule_v4.c - Single point of definition */
 OS_boy Array[mx_thread] __attribute__((aligned(8)));
 OS_boy *arr[mx_thread];
@@ -67,6 +67,7 @@ __attribute__((naked)) void SVC_Handler(void) {
 }
 
 void SysTick_Handler(void) {
+	++global_tick;
     SYS_ticks();
     SYS_prep();
 }
@@ -190,7 +191,7 @@ int main(void) {
     SystemClock_Config();
     MX_GPIO_Init();
     MX_USART1_UART_Init();
-    SCB->CPACR &= ~((3UL << 20) | (3UL << 22));//disable fpu
+    SCB->CPACR |= ((3UL << 10 * 2) | (3UL << 11 * 2));
     for (int idx = 0; idx < mx_thread; idx++) {
         arr[idx] = &Array[idx];
     }
