@@ -183,7 +183,7 @@ green_duration_ticks = 150 + ((uint32_t)q_len * 450) / 50;
 ### 2. 90-Second Anti-Starvation Bounding
 To ensure mathematical fairness and avoid starvation for low-density approaches, the algorithm tracks waiting duration:
 
-$$\text{Starvation Condition: } (t_{\text{current}} - t_{\text{last\_green}}[i]) \ge 9000 \text{ ticks } (90.0\text{s})$$
+$$\text{Starvation Condition: } (t_{\text{current}} - t_{\text{last green}}[i]) \ge 9000 \text{ ticks } (90.0\text{ s})$$
 
 If any lane breaches this threshold, the greedy heuristic is bypassed, and green priority is immediately transferred to the starving lane.
 
